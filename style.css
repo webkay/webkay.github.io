@@ -26,3 +26,5 @@ a:hover { text-decoration: underline; }
 .nav a { margin-right: 16px; }
 
 .lead { font-size: 18px; color: #444; }
+
+.logo { display: block; width: 96px; height: 96px; margin: 0 0 16px; }  
