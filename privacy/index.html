@@ -13,15 +13,15 @@
   <p>This privacy policy describes how Differing Reader (the "add-on", "we", "our") handles your information when you use it. By using the add-on, you agree to the practices described here.</p>
 
   <h2>What Differing Reader does</h2>
-  <p>Differing Reader is a Google Workspace Editor Add-on for Google Docs. It computes a textual diff between two Google Docs you specify — the document you have open and another document you provide a URL for.</p>
+  <p>Differing Reader is a Google Workspace Editor Add-on for Google Docs. It computes a textual diff between two Google Docs you specify — the document you have open and a second document you select through the Google Picker.</p>
 
   <h2>Data we process</h2>
   <p>When you click Compare in the add-on sidebar, the following data is processed:</p>
   <ul>
-    <li>The textual content of the Google Doc you currently have open, accessed through the Google Docs API under your authorization.</li>
-    <li>The textual content of the second Google Doc whose URL you provide, accessed through the same API.</li>
+    <li>The textual content of the Google Doc you currently have open, accessed under the <code>documents.currentonly</code> OAuth scope, which grants access only to the document the add-on is invoked from.</li>
+    <li>The textual content of the second Google Doc you explicitly select through the Google Picker, accessed under the <code>drive.file</code> OAuth scope, which grants per-file access only to files you pick.</li>
   </ul>
-  <p>We treat Google user data accessed through the <code>documents</code> OAuth scope as sensitive data and apply the protection mechanisms described in the next section. Both documents' text is sent over HTTPS to our backend service, where a text diff is computed. The diff is returned to the add-on and shown in the sidebar.</p>
+  <p>We treat Google user data accessed through these OAuth scopes as sensitive data and apply the protection mechanisms described in the next section. Both documents' text is sent over HTTPS to our backend service, where a text diff is computed. The diff is returned to the add-on and shown in the sidebar.</p>
 
   <h2>How we protect your data</h2>
   <p>We apply the following technical and organizational measures to protect document content and other sensitive data while it is being processed:</p>
@@ -30,7 +30,7 @@
     <li><strong>No data at rest.</strong> Document content is never written to disk, databases, caches, or any other persistent storage on our backend. It exists only in process memory for the duration of a single comparison request (typically under a few seconds) and is released when the request completes. Because no document content is stored, there is no at-rest copy that could be exposed in the event of a storage breach.</li>
     <li><strong>Authentication and access control.</strong> The backend's <code>/compare</code> endpoint is protected by a bearer-token credential held by the add-on; requests without a valid token are rejected. Administrative access to the hosting account is protected by a strong, unique password and two-factor authentication. Only the add-on's developer has administrative access to the backend.</li>
     <li><strong>Network and infrastructure security.</strong> The backend runs on Heroku (a Salesforce product), a managed platform that provides operating-system patching, network isolation, and platform-level intrusion protection. Inbound traffic is terminated at Heroku's TLS load balancer.</li>
-    <li><strong>Logging hygiene.</strong> Our backend does not log document content, document titles, document URLs, or user identifiers. Request bodies are explicitly excluded from application logs. Standard platform access logs (timestamp, response status, latency) are retained only for the period set by Heroku's defaults and contain no document data.</li>
+    <li><strong>Logging hygiene.</strong> Our backend does not log document content, document titles, or user identifiers. Request bodies are explicitly excluded from application logs. Standard platform access logs (timestamp, response status, latency) are retained only for the period set by Heroku's defaults and contain no document data.</li>
     <li><strong>Data minimization.</strong> We request only the OAuth scopes required to operate the add-on, we only read the two documents you explicitly designate per comparison, and we send to the backend only the plain text of those documents — no metadata, no formatting, no comments, no revision history.</li>
     <li><strong>Dependency and vulnerability management.</strong> Backend dependencies are pinned and updated when security advisories are published. Suspected vulnerabilities can be reported to the contact address below and will be triaged promptly.</li>
     <li><strong>Incident response.</strong> If we become aware of a security incident that could affect user data, we will investigate, take corrective action, and notify affected users by the email address associated with their Google account where required by applicable law.</li>
@@ -39,7 +39,7 @@
   <h2>What we do not do</h2>
   <ul>
     <li>We do not store your document content. Text is held in memory only for the duration of a single comparison and discarded once the response is returned.</li>
-    <li>We do not log your document content, titles, or URLs. Request bodies are excluded from server logs by configuration.</li>
+    <li>We do not log your document content or titles. Request bodies are excluded from server logs by configuration.</li>
     <li>We do not share your document content with any third party for advertising, analytics, or any other purpose.</li>
     <li>We do not use your document content to train machine-learning models, our own or anyone else's.</li>
     <li>We do not access any Google data beyond the two documents you point the add-on at.</li>
